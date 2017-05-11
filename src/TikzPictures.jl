@@ -200,8 +200,9 @@ function save(f::PDF, tp::TikzPicture)
         error("LaTeX error")
     end
 
-    if contains(log, "LaTeX Warning: Label(s)")
+    while contains(log, "LaTeX Warning: Label(s)")
         success(latexCommand)
+        log = readstring("$(f.filename).log")
     end
 
     try
